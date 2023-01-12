@@ -20,7 +20,7 @@ public class LoginAccountTest extends TestBase{
 	}
 	
 	@Test
-	public void loginSuccessful() {
+	public void verifyloginfunctionality() {
 		HomePage homePage = new HomePage();
 		LoginAccountPage loginAccountPage= homePage.clickLoginPage();
 		MyAccountPage myAccountPage=loginAccountPage.login();
