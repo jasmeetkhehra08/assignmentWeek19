@@ -1,5 +1,6 @@
 package com.naveenAutomation.Reports;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -12,14 +13,14 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
-import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 
 public class ExtentReportListener extends TestListenerAdapter {
 
-	public ExtentHtmlReporter htmlReporter;
-	public ExtentTest test;
-	public ExtentReports extent;
+	public ExtentSparkReporter sparkReporter;//this will create a blank file
+	public ExtentTest test; //to capture results
+	public ExtentReports extent; // the report which will be generated
 
 	@Override
 	public void onStart(ITestContext testContext) {
@@ -29,22 +30,27 @@ public class ExtentReportListener extends TestListenerAdapter {
 		String repName = "Extent_Report_" + timeStamp + ".html";
 
 		// Defines the location of extent report
-		htmlReporter = new ExtentHtmlReporter("./Extent Report/" + repName);
+		sparkReporter = new ExtentSparkReporter("./Extent Report/" + repName);
 
 		// Loading the config XML
-		htmlReporter.loadXMLConfig("./extent-config.xml");
+		try {
+			sparkReporter.loadXMLConfig("./extent-config.xml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		htmlReporter.config().setReportName("Regression Suite");
-		htmlReporter.config().setTheme(Theme.STANDARD);
+		sparkReporter.config().setReportName("Regression Suite");
+		sparkReporter.config().setTheme(Theme.STANDARD);
 
 		extent = new ExtentReports();
 
-		extent.attachReporter(htmlReporter);
+		extent.attachReporter(sparkReporter);
 
 		extent.setSystemInfo("Name of the host", "Localhost");
 		extent.setSystemInfo("Tester Name", "Manvir");
 		extent.setSystemInfo("Env", "Prod");
-		
+
 	}
 
 	@Override
@@ -64,7 +70,7 @@ public class ExtentReportListener extends TestListenerAdapter {
 		test = extent.createTest(tr.getName());
 		test.log(Status.SKIP, MarkupHelper.createLabel(tr.getName(), ExtentColor.ORANGE));
 	}
-	
+
 	@Override
 	public void onFinish(ITestContext testContext) {
 		extent.flush();

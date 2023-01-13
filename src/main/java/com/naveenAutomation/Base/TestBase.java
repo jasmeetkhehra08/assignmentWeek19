@@ -1,6 +1,6 @@
 package com.naveenAutomation.Base;
 
-import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -46,10 +46,15 @@ public class TestBase {
 		eventFiringWebDriver.register(events);
 		driver=eventFiringWebDriver;
 		
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
 		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-		driver.manage().timeouts().scriptTimeout(Duration.ofSeconds(60));
-		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
+
+		// Manage the page load timeout
+		driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+
+		// Manage the script load timeout
+		driver.manage().timeouts().setScriptTimeout(60, TimeUnit.SECONDS);
 
 		// Launch a page
 		driver.get("https://naveenautomationlabs.com/opencart/index.php?route=common/home");

@@ -13,7 +13,7 @@ public class HomePage extends TestBase {
 	}
 
 	@FindBy(xpath = "//a[text()='Login']")
-	WebElement registerBtn;
+	WebElement loginBtn;
 
 	@FindBy(xpath = "//span[text()='My Account']")
 	WebElement myAccount;
@@ -23,11 +23,18 @@ public class HomePage extends TestBase {
 
 	public LoginAccountPage clickLoginPage() {
 		myAccount.click();
-		registerBtn.click();
+		loginBtn.click();
 		return new LoginAccountPage();
 
 	}
 
+	public AccountLogin clickLogin() {
+		myAccount.click();
+		loginBtn.click();
+		return new AccountLogin();
+
+	}
+	
 	public String verifyPageTitle() {
 		return verifyTitletext.getText();
 	}
