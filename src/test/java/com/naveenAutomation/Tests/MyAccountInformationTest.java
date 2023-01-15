@@ -29,21 +29,24 @@ public class MyAccountInformationTest extends TestBase {
 		MyAccountPage myAccountPage = loginAccountPage.login();
 		MyAccountInformation myAccountInformation = myAccountPage.editAccount();
 		sf.assertEquals(myAccountInformation.verifyTitle(), "My Account Information", "Page title does not match");
-		String firstName= myAccountInformation.validateFirstName();
-		String lastName=myAccountInformation.validateLastName();
+		String firstName = myAccountInformation.validateFirstName();
+		String lastName = myAccountInformation.validateLastName();
 		String email = myAccountInformation.validateEmail();
-		String phoneNumber =myAccountInformation.validatePhoneNumber();
+		String phoneNumber = myAccountInformation.validatePhoneNumber();
 		myAccountInformation.navigateTomyAccountPage();
 		myAccountPage.editAccountInfo();
-		
-		sf.assertEquals(myAccountInformation.verifyFirstNameField(), firstName, "field empty or information does not match");
-		sf.assertEquals(myAccountInformation.verifyLastNameField(), lastName, "field empty or information does not match");
-		sf.assertEquals(myAccountInformation.verifyEmailField(), email,"field empty or information does not match");
-		sf.assertEquals(myAccountInformation.verifyPhoneNumberField(), phoneNumber,"field empty or information does not match");
+
+		sf.assertEquals(myAccountInformation.verifyFirstNameField(), firstName,
+				"field empty or information does not match");
+		sf.assertEquals(myAccountInformation.verifyLastNameField(), lastName,
+				"field empty or information does not match");
+		sf.assertEquals(myAccountInformation.verifyEmailField(), email, "field empty or information does not match");
+		sf.assertEquals(myAccountInformation.verifyPhoneNumberField(), phoneNumber,
+				"field empty or information does not match");
 		myAccountInformation.navigateTomyAccountPage();
 		sf.assertAll();
 	}
-	
+
 	@AfterMethod
 	public void teardown() {
 		quitBrowser();
